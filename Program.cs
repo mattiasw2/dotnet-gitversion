@@ -14,6 +14,8 @@ namespace dotnet.gitversion
         private const string ProjectJsonFile = "project.json";
         private const string CsprojFile = ".csproj";
         private static readonly Regex s_regex = new Regex(@"(?<json>project\.json)|(?<csproj>\.csproj$)");
+        // private static string _versionRootName = "PackageVersion";
+        private static string _versionRootName = "Version";
 
         public static int Main(string[] args)
         {
@@ -108,7 +110,7 @@ namespace dotnet.gitversion
         private static void UpdateCsproj(string csproj, string legacySemVerPadded)
         {
             var document = XDocument.Load(csproj);
-            var packageVersion = XName.Get("PackageVersion");
+            var packageVersion = XName.Get(_versionRootName);
             var isSet = false;
 
             foreach (var node in document.Root.Descendants(packageVersion))
